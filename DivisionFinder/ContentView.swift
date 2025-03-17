@@ -10,20 +10,18 @@ struct ContentView: View {
     @State private var selectedEvents: [String] = []
     
     // Array of events to choose from
-    let events = ["Poomsae", "Open Poomsae", "Weapons", "Synchronized", "Sparring", "Power Hand Breaking", "3 Direction Breaking", "Mixed Pair Forms", "Mixed Team Forms"]
+    let events = ["Regular Poomsae", "Open Poomsae", "Weapons Forms", "Sparring", "Power Hand Breaking", "3 Directional Breaking"]
     
     // Array of belt colors for the picker
-    let beltColors = ["White", "Yellow", "Orange", "Green", "Blue", "Purple", "Red", "Brown", "Black", "1st Dan", "2nd Dan", "3nd Dan", "4th Dan", "5th Dan", "6th Dan", "7th Dan" ]
+    let beltColors = ["White", "Yellow", "Orange", "Green", "Blue", "Purple", "Red", "Brown", "Black"]
     
     let genders = ["Male", "Female"]
     
     var body: some View {
         VStack {
-            // Name input field
             TextField("Enter your name", text: $name)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            
             Picker("Gender: ", selection: $genderSelection) {
                 ForEach(genders, id: \.self) { gender in
                     Text(gender)
@@ -76,23 +74,16 @@ struct ContentView: View {
             
             // Button to process the form data
             Button(action: {
-                // Here, you can perform any logic with the collected data
                 print("Name: \(name)")
                 print("Age: \(age)")
                 print("Belt Color: \(beltColor)")
                 print("Gender: \(genderSelection)")
                 print("Selected Events: \(selectedEvents.joined(separator: ", "))")
                 
-                var division = DivisionManager(belt: beltColor, gender: genderSelection, age: Int(age) ?? 0)
+                var division = DivisionManager(belt: beltColor, gender: genderSelection, age: Int(age) ?? 0, selectedEvents: selectedEvents)
                 
-                print(division.findPoomsae())
-                print(division.findSparring())
-                print(division.findWeapon())
-                print(division.findOpenPoomsae())
-                print(division.findPowerBreaking())
-                print(division.findThreeBreaking())
-//                print(division.findPowerBreaking())
-                // You can also navigate to another view, perform calculations, etc.
+                print(division.getAllDivisions())
+
             }) {
                 Text("Submit")
                     .padding()
